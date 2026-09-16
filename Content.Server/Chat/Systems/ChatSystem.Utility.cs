@@ -184,6 +184,16 @@ public sealed partial class ChatSystem
     }
 
     /// <summary>
+    /// Returns a list of players on a given channel. Also returns observers.
+    /// </summary>
+    /// <returns></returns>
+    private Dictionary<ICommonSession, ICChatRecipientData> GetChannelRecipients()
+    {
+        var recipients = new Dictionary<ICommonSession, ICChatRecipientData>();
+        return recipients;
+    }
+
+    /// <summary>
     ///     Returns list of players and ranges for all players withing some range. Also returns observers with a range of -1.
     /// </summary>
     private Dictionary<ICommonSession, ICChatRecipientData> GetRecipients(EntityUid source, float voiceGetRange)
@@ -211,19 +221,19 @@ public sealed partial class ChatSystem
             // even if they are a ghost hearer, in some situations we still need the range
             if (sourceCoords.TryDistance(EntityManager, transformEntity.Coordinates, out var distance) && distance < voiceGetRange)
             {
-                recipients.Add(player, new ICChatRecipientData(distance, observer));
+                recipients.Add(player, new ICChatRecipientData(playerEntity, distance, observer));
                 continue;
             }
 
             if (observer)
-                recipients.Add(player, new ICChatRecipientData(-1, true));
+                recipients.Add(player, new ICChatRecipientData(playerEntity, -1, true));
         }
 
         RaiseLocalEvent(new ExpandICChatRecipientsEvent(source, voiceGetRange, recipients));
         return recipients;
     }
 
-    public readonly record struct ICChatRecipientData(float Range, bool Observer, bool? HideChatOverride = null)
+    public readonly record struct ICChatRecipientData(EntityUid Entity, float Range, bool Observer, bool? HideChatOverride = null)
     {
     }
 

@@ -385,7 +385,7 @@ public sealed partial class StationAiSystem : SharedStationAiSystem
             if (range < 0 || range > ev.VoiceRange)
                 continue;
 
-            ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(range, false));
+            ev.Recipients.TryAdd(actor.PlayerSession, new ICChatRecipientData(insertedAi.Value, range, false));
         }
     }
 

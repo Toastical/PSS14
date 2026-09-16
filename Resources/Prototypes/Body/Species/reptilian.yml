@@ -124,7 +124,9 @@
       spawned:
         - id: FoodMeatLizard
           amount: 5
-    - type: LizardAccent
+    - type: Language
+      spoken:
+      - Test
     - type: Speech
       speechSounds: Lizard
       speechVerb: Reptilian

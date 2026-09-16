@@ -1,0 +1,7 @@
+﻿  - type: language
+    id: Test
+    name: "Test Language Please Ignore"
+    color: "#539c00"
+    syllables:
+    - "AAAAA"
+    - "BBBBB"

@@ -29,6 +29,19 @@ public sealed partial class ChatSystem
         if (message.Length == 0)
             return;
 
+        var recipients = GetRecipients(source, VoiceRange);
+
+        // Handle language collection and sorting.
+        foreach (var (session, data) in recipients)
+        {
+            // LanguageComponent on mobs stores HashSet<LanguagePrototypeId> Understood/SpokenLanguages
+            // Message gets HashSet<LanguagePrototypeId> made after parsing.
+            // A shared set is made by Intersecting the msg and mob hashes.
+            // The shared set is used as the key for the Shared -> RecipientGroup dictionary.
+            // Groups are then iterated, message is constructed from the key hash and msg segments
+            // For each recipient, send message.
+        }
+
         var speech = GetSpeechVerb(source, message);
 
         // get the entity's apparent name (if no override provided).
